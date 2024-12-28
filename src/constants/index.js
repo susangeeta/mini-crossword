@@ -55,3 +55,9 @@ export const puzzleData = {
     },
   },
 };
+
+export default function gridLayout(count) {
+  return Array(count)
+    .fill()
+    .map(() => Array(count).fill(""));
+}

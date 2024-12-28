@@ -112,7 +112,7 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
     }
   };
 
-  const getCellNumber = (row, col) => {
+  const getCurrentCellNumber = (row, col) => {
     for (const [number, clue] of Object.entries(puzzleData.across)) {
       if (clue.position.row === row && clue.position.col === col) return number;
     }
@@ -122,7 +122,7 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
     return null;
   };
 
-  const isInSelectedLine = (rowIndex, colIndex) => {
+  const isInSeletedMode = (rowIndex, colIndex) => {
     if (selectedClue) {
       const clue = puzzleData[selectedClue.type][selectedClue.number];
       if (selectedClue.type === "across" && rowIndex === clue.position.row) {
@@ -150,97 +150,87 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
   };
 
   return (
-    <section className="flex flex-col items-center py-10 main-container">
-      <div className="w-full max-w-6xl px-4">
-        {isComplete && (
-          <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-md text-center font-bold">
-            {`Congratulations! You've completed the puzzle! 🎉`}
-          </div>
-        )}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="grid grid-cols-5 gap-2">
-            {grid.map((row, rowIndex) =>
-              row.map((cell, colIndex) => {
-                const isSelected =
-                  selectedCell.row === rowIndex &&
-                  selectedCell.col === colIndex;
-                const isHighlighted = isInSelectedLine(rowIndex, colIndex);
-                const cellNumber = getCellNumber(rowIndex, colIndex);
-                return (
-                  <div
-                    key={`${rowIndex}-${colIndex}`}
-                    className="relative w-full h-full"
-                  >
-                    {cellNumber && (
-                      <span className="absolute top-0 left-0 z-10 p-0.5 text-xs">
-                        {cellNumber}
-                      </span>
-                    )}
-                    <input
-                      ref={cellRefs.current[rowIndex * 5 + colIndex]}
-                      type="text"
-                      maxLength="1"
-                      value={cell}
-                      className={`w-full h-full text-center text-xl font-semibold uppercase shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] rounded-md
+    <section className="flex p-8 main-container">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-5 gap-2">
+          {grid.map((row, rowIndex) =>
+            row.map((cell, colIndex) => {
+              const isSelected =
+                selectedCell.row === rowIndex && selectedCell.col === colIndex;
+              const isHighlighted = isInSeletedMode(rowIndex, colIndex);
+              const cellNumber = getCurrentCellNumber(rowIndex, colIndex);
+              return (
+                <div
+                  key={`${rowIndex}-${colIndex}`}
+                  className="relative w-full h-full"
+                >
+                  {cellNumber && (
+                    <span className="absolute top-0 left-0  p-2 text-2xl">
+                      {cellNumber}
+                    </span>
+                  )}
+                  <input
+                    ref={cellRefs.current[rowIndex * 5 + colIndex]}
+                    type="text"
+                    maxLength="1"
+                    value={cell}
+                    className={`w-full h-24 text-center text-xl font-semibold uppercase border rounded-md
                       ${
                         isSelected
-                          ? "bg-blue-100 border-blue-500"
+                          ? "bg-yellow-500"
                           : isHighlighted
-                          ? "bg-blue-50"
+                          ? "bg-yellow-50"
                           : "bg-white border-gray-300"
                       }
                       ${isPenActive ? "text-[#959592]" : ""}
                       focus:outline-none focus:border-blue-500`}
-                      onClick={() => handleCellSelect(rowIndex, colIndex)}
-                      onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
-                      onChange={(e) => handleInput(e, rowIndex, colIndex)}
-                    />
-                  </div>
-                );
-              })
-            )}
+                    onClick={() => handleCellSelect(rowIndex, colIndex)}
+                    onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
+                    onChange={(e) => handleInput(e, rowIndex, colIndex)}
+                  />
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        <div className="grid grid-cols-2 gap-8">
+          <div className="">
+            <h3 className="font-bold text-xl mb-1 ">Across</h3>
+            {Object.entries(puzzleData.across).map(([number, clue]) => (
+              <div
+                key={`across-${number}`}
+                className={` cursor-pointer p-2 rounded-md transition-colors hover:bg-blue-50
+            ${
+              selectedClue?.type === "across" && selectedClue?.number === number
+                ? "bg-blue-100"
+                : ""
+            }`}
+                onClick={() => handleClueClick(number, "across")}
+              >
+                <span className="font-medium mr-2">{number}.</span>
+                {clue.clue}
+              </div>
+            ))}
           </div>
 
-          <div className="flex-1">
-            <div className="mb-6">
-              <h3 className="font-bold mb-2">Across</h3>
-              {Object.entries(puzzleData.across).map(([number, clue]) => (
-                <div
-                  key={`across-${number}`}
-                  className={`mb-2 cursor-pointer p-2 rounded-md transition-colors
-                    ${
-                      selectedClue?.type === "across" &&
-                      selectedClue?.number === number
-                        ? "bg-blue-100"
-                        : "hover:bg-blue-50"
-                    }`}
-                  onClick={() => handleClueClick(number, "across")}
-                >
-                  <span className="font-medium mr-2">{number}.</span>
-                  {clue.clue}
-                </div>
-              ))}
-            </div>
-
-            <div>
-              <h3 className="font-bold mb-2">Down</h3>
-              {Object.entries(puzzleData.down).map(([number, clue]) => (
-                <div
-                  key={`down-${number}`}
-                  className={`mb-2 cursor-pointer p-2 rounded-md transition-colors
-                    ${
-                      selectedClue?.type === "down" &&
-                      selectedClue?.number === number
-                        ? "bg-blue-100"
-                        : "hover:bg-blue-50"
-                    }`}
-                  onClick={() => handleClueClick(number, "down")}
-                >
-                  <span className="font-medium mr-2">{number}.</span>
-                  {clue.clue}
-                </div>
-              ))}
-            </div>
+          <div className="">
+            <h3 className="font-bold text-xl mb-1">Down</h3>
+            {Object.entries(puzzleData.down).map(([number, clue]) => (
+              <div
+                key={`down-${number}`}
+                className={` cursor-pointer p-2 rounded-md transition-colors hover:bg-blue-50
+            ${
+              selectedClue?.type === "down" && selectedClue?.number === number
+                ? "bg-blue-100"
+                : ""
+            }`}
+                onClick={() => handleClueClick(number, "down")}
+              >
+                <span className="font-medium mr-2">{number}.</span>
+                {clue.clue}
+              </div>
+            ))}
           </div>
         </div>
       </div>

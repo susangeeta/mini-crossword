@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
-import { FaPen, FaPlay } from "react-icons/fa";
-import { IoMdPause } from "react-icons/io";
+import { FaClock } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
+import { PuzzleSetting } from ".";
 
 const Header = ({ setIsPenActive, isPenActive, setGrid }) => {
   const [isTimerRunning, setIsTimerRunning] = useState(true);
+  const [modal, setModal] = useState(false);
   const timerRef = useRef(null);
   const [time, setTime] = useState(0);
 
@@ -25,7 +26,6 @@ const Header = ({ setIsPenActive, isPenActive, setGrid }) => {
     setIsTimerRunning(true);
   };
 
-  // Timer functionality
   useEffect(() => {
     if (isTimerRunning) {
       timerRef.current = setInterval(() => {
@@ -36,36 +36,49 @@ const Header = ({ setIsPenActive, isPenActive, setGrid }) => {
   }, [isTimerRunning]);
 
   return (
-    <section className="main-container shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] bg-white">
-      <div className="py-4 flex w-full justify-between">
-        <buttonn className="text-2xl text-purple-600">
-          <IoSettingsSharp />
-        </buttonn>
+    <>
+      <section className="bg-[#f5f5f5]">
+        <div className="py-4 px-6 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setModal(true)}
+              className="text-2xl text-primary border"
+            >
+              <IoSettingsSharp />
+            </button>
 
-        <div className="flex items-center gap-4">
-          <div className="font-semibold text-lg">{formatTime(time)}</div>
-          <button
-            onClick={() => setIsTimerRunning(!isTimerRunning)}
-            className="text-[#b7b7b7]"
-          >
-            {isTimerRunning ? <IoMdPause /> : <FaPlay />}
-          </button>
-        </div>
+            <div
+              onClick={() => setIsTimerRunning(!isTimerRunning)}
+              className="font-semibold text-lg cursor-pointer flex items-center gap-2"
+            >
+              {isTimerRunning ? (
+                <>{formatTime(time)}</>
+              ) : (
+                <button className="text-primary text-2xl">
+                  <FaClock />
+                </button>
+              )}
+            </div>
+          </div>
 
-        <div className="flex items-center gap-8">
-          <button onClick={handleClear} className="">
-            Clear
-          </button>
-          <button className="">Reset</button>
-          <button
-            onClick={() => setIsPenActive(!isPenActive)}
-            className="text-xl text-purple-600"
-          >
-            <FaPen />
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleClear}
+              className="px-4 py-2 bg-primary text-white rounded-md"
+            >
+              Reveal
+            </button>
+            <button
+              onClick={handleClear}
+              className="px-4 py-2 bg-red-600 text-white rounded-md"
+            >
+              Reset
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {modal && <PuzzleSetting setModal={setModal} />}
+    </>
   );
 };
 
