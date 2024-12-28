@@ -3,18 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { FaClock } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { PuzzleSetting } from ".";
+import { formatTime } from "../../utils";
 
 const Header = ({ setIsPenActive, isPenActive, setGrid }) => {
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [modal, setModal] = useState(false);
-  const timerRef = useRef(null);
   const [time, setTime] = useState(0);
-
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
-  };
+  const timerRef = useRef(null);
 
   const handleClear = () => {
     setGrid(

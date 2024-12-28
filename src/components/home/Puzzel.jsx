@@ -1,13 +1,14 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
 import React, { useEffect, useRef, useState } from "react";
 import { puzzleData } from "../../constants";
+import WinModal from "./WinModal";
 
 const Puzzle = ({ isPenActive, grid, setGrid }) => {
   const [selectedCell, setSelectedCell] = useState({ row: 0, col: 0 });
   const [direction, setDirection] = useState("across");
   const [selectedClue, setSelectedClue] = useState(null);
+  const [showLossModal, setShowLossModal] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const cellRefs = useRef([]);
 
@@ -36,6 +37,9 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
         );
         return clue.answer === colCells.join("");
       });
+
+      console.log(acrossCorrect, "accross");
+      console.log(downCorrect, "down");
 
       setIsComplete(acrossCorrect && downCorrect);
     };
@@ -151,6 +155,7 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
 
   return (
     <section className="flex p-8 main-container">
+      <WinModal isComplete={isComplete} setIsComplete={setIsComplete} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="grid grid-cols-5 gap-2">
           {grid.map((row, rowIndex) =>

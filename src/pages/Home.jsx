@@ -4,7 +4,7 @@ import gridLayout from "../constants";
 
 const Home = () => {
   const [isPenActive, setIsPenActive] = useState(false);
-  const [grid, setGrid] = useState(gridLayout(7));
+  const [grid, setGrid] = useState(gridLayout(5));
 
   return (
     <section
