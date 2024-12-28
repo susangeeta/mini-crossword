@@ -9,10 +9,10 @@ export const puzzleData = {
     6: {
       clue: "See 1-Across",
       answer: "CLAUS",
-      position: { row: 0, col: 5 },
+      position: { row: 0, col: 6 },
     },
     7: {
-      clue: "Tale that might you get you off the hook",
+      clue: "Tale that might get you off the hook",
       answer: "ALIBI",
       position: { row: 1, col: 0 },
     },
@@ -36,27 +36,27 @@ export const puzzleData = {
     2: {
       clue: "Sports reporter LaForce",
       answer: "ALLIE",
-      position: { row: 0, col: 1 },
+      position: { row: 0, col: 6 },
     },
     3: {
       clue: "Easily duped",
       answer: "NAIVE",
-      position: { row: 0, col: 2 },
+      position: { row: 1, col: 2 },
     },
     4: {
       clue: "Crop that grows underground",
-      answer: "TUBER",
-      position: { row: 0, col: 3 },
+      answer: "PEANUT",
+      position: { row: 2, col: 4 },
     },
     5: {
-      clue: '"All kidding ___ ..."',
+      clue: "'All kidding ___ ...'",
       answer: "ASIDE",
-      position: { row: 0, col: 4 },
+      position: { row: 3, col: 6 },
     },
   },
 };
 
-export default function gridLayout(count) {
+export default function grid(count) {
   return Array(count)
     .fill()
     .map(() => Array(count).fill(""));
