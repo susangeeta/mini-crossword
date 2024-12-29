@@ -7,37 +7,85 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-/_ eslint-disable react/prop-types _/
-import { useTime } from "../../contexts/TimeContext";
-import generateGrid from "../../utils";
-import { Modal } from "../common";
+Here’s the README in markdown format:
 
-const LoseModal = ({ showLossModal, setShowLossModal, setGrid }) => {
-const { formatTime } = useTime();
+````markdown
+# CamCom Assignment: NYT Mini Crossword
 
-/\*\*
+## Description
 
-- Logic to handle game reset
-  \*/
-  const handleClear = () => {
-  setGrid(generateGrid(5));
-  setShowLossModal(false);
-  };
+A mini crossword game built as a Single Page Application (SPA). Users can solve crossword puzzles with interactive settings.
 
-return (
-<Modal isOpen={showLossModal} onClose={() => setShowLossModal(false)}>
-<div className="p-6 text-center bg-white w-[40rem] h-[25rem] flex items-center justify-center flex-col rounded-lg">
-<h2 className="text-4xl font-bold mb-2">Game Over! 💔</h2>
-<p className="mb-4 text-lg">{`You played for ${formatTime()} seconds!`}</p>
-<button
-          onClick={handleClear}
-          className="px-8 py-3 text-white bg-primary rounded-lg text-lg"
-        >
-Back to Puzzle
-</button>
-</div>
-</Modal>
-);
-};
+## Features
 
-export default LoseModal;
+- **Crossword Gameplay:**
+  - Interactive grid for typing answers.
+  - Clue display for solving puzzles.
+  - Answer validation and completion check.
+- **Optional Features:**
+  - **Puzzle Settings:**
+    - Difficulty levels (Easy, Medium, Hard).
+    - Timer for time-based gameplay.
+  - **Game Settings:**
+    - Theme switching (Light/Dark).
+    - Sound toggle.
+
+## Installation
+
+To run the project locally:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/CamCom-assignment.git
+   ```
+````
+
+2. Navigate to the project directory:
+   ```bash
+   cd CamCom-assignment
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   ```
+
+## Deployment
+
+The app is deployed and available at the following URL:
+
+[Live Demo](https://your-app-link.com)
+
+## Folder Structure
+
+src/
+│
+├── components/ # React components
+├── context/ # State management (if using Context API)
+├── constants/ # Static data like puzzle answers
+├── styles/ # Styling files
+├── utils/ # Helper functions
+├── App.js # Main component
+├── index.js # Entry point
+└── assets/ # Images, icons, etc.
+
+## Technologies Used
+
+- **Framework:** React.js
+- **Styling:** Tailwind CSS
+- **State Management:** Context API/Redux
+- **Deployment:** Vercel/Netlify
+
+## Author
+
+- **Name:** Susangeeta Swain
+- **Email:** [Your Email Address]
+- **GitHub:** [GitHub Profile](https://github.com/username)
+
+```
+
+Let me know if you need to modify or customize any section further!
+```

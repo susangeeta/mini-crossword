@@ -12,9 +12,9 @@ const Home = () => {
       style={{
         backgroundImage: `url("https://amuselabs.com/wp-content/uploads/2023/07/Group-1931.svg?id=6889")`,
       }}
-      className="h-screen flex bg-no-repeat bg-center bg-cover items-center justify-center w-full"
+      className=" md:h-screen flex bg-no-repeat bg-center bg-cover items-center justify-center w-full"
     >
-      <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white w-3/4 rounded-md overflow-hidden border border-gray-200">
+      <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white md:w-4/5 lg:w-3/4 rounded-md overflow-hidden border border-gray-200">
         <Header
           setIsPenActive={setIsPenActive}
           isPenActive={isPenActive}

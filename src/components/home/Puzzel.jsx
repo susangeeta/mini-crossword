@@ -194,7 +194,7 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
   };
 
   return (
-    <section className="flex p-8 main-container">
+    <section className="flex p-4 md:p-8 main-container">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="grid grid-cols-5 gap-2">
           {grid.map((row, rowIndex) =>
@@ -206,10 +206,10 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
               return (
                 <div
                   key={`${rowIndex}-${colIndex}`}
-                  className="relative w-full h-full"
+                  className="relative  w-full h-full"
                 >
                   {cellNumber && (
-                    <span className="absolute top-0 left-0  p-2 text-2xl">
+                    <span className="absolute top-0 left-0  p-2  text-base md:text-2xl">
                       {cellNumber}
                     </span>
                   )}
@@ -238,9 +238,9 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-1  md:grid-cols-2 gap-3 md:gap-8">
           <div className="">
-            <h3 className="font-bold text-xl mb-1 ">Across</h3>
+            <h3 className="font-bold text-xl  2xl:text-xl mb-1 ">Across</h3>
             {Object.entries(puzzleData.across).map(([number, clue]) => (
               <div
                 key={`across-${number}`}

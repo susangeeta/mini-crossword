@@ -10,7 +10,7 @@ const Modal = ({ isOpen, onClose, children }) => {
       onClick={onClose}
       className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
     >
-      <div onClick={(e) => e.stopPropagation()} className="w-fit h-fit">
+      <div onClick={(e) => e.stopPropagation()} className=" md:w-fit  md:h-fit">
         {children}
       </div>
     </div>

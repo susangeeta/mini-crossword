@@ -14,7 +14,7 @@ const LoseModal = ({ showLossModal, setShowLossModal, setGrid }) => {
 
   return (
     <Modal isOpen={showLossModal} onClose={() => setShowLossModal(false)}>
-      <div className="p-6 text-center bg-white w-[40rem] h-[28rem] flex items-center justify-center flex-col rounded-lg relative">
+      <div className="p-6 text-center bg-white w-[20rem] h-[25rem]   md:w-[40rem]  md:h-[28rem] flex items-center justify-center flex-col rounded-lg relative">
         <div className="absolute top-6 flex justify-between w-full px-8">
           <Clock className="w-6 h-6 text-gray-400" />
           <MessageCircleX className="w-8 h-8 text-red-500" />
@@ -25,8 +25,8 @@ const LoseModal = ({ showLossModal, setShowLossModal, setGrid }) => {
           Puzzle InComplete!
         </div>
 
-        <h2 className="text-4xl font-bold mb-2">Game Over! 💔</h2>
-        <p className="mb-4 text-lg">{`You played for ${formatTime()} seconds!`}</p>
+        <h2 className=" text-xl md:text-4xl font-bold mb-2">Game Over! 💔</h2>
+        <p className="mb-4 text-base  md:text-lg">{`You played for ${formatTime()} seconds!`}</p>
 
         <button
           onClick={handleClear}
@@ -36,16 +36,6 @@ const LoseModal = ({ showLossModal, setShowLossModal, setGrid }) => {
           Back to Puzzle
         </button>
       </div>
-      {/* <div className="p-6 text-center bg-white w-[40rem] h-[25rem] flex items-center justify-center flex-col rounded-lg">
-        <h2 className="text-4xl font-bold mb-2">Game Over! 💔</h2>
-        <p className="mb-4 text-lg">{`You played for ${formatTime()} seconds!`}</p>
-        <button
-          onClick={handleClear}
-          className="px-8 py-3 text-white bg-primary rounded-lg text-lg"
-        >
-          Back to Puzzle
-        </button>
-      </div> */}
     </Modal>
   );
 };
