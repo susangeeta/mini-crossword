@@ -1,34 +1,24 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useRef, useState } from "react";
-import { FaClock } from "react-icons/fa";
+import { useState } from "react";
 import { IoSettingsSharp } from "react-icons/io5";
 import { PuzzleSetting } from ".";
-import { formatTime } from "../../utils";
+import { useTime } from "../../contexts/TimeContext";
+import generateGrid from "../../utils";
+import PauseModal from "./PauseModal";
 
-const Header = ({ setIsPenActive, isPenActive, setGrid }) => {
-  const [isTimerRunning, setIsTimerRunning] = useState(true);
-  const [modal, setModal] = useState(false);
-  const [time, setTime] = useState(0);
-  const timerRef = useRef(null);
+const Header = ({ setGrid }) => {
+  const [openSettingModal, setOpenSettingModal] = useState(false);
+  const [isGamePaused, setIsGamePaused] = useState(false);
+  const { time, startTimer, stopTimer, resetTimer, formatTime } = useTime();
 
+  /**
+   * Function to clear all the states and reset the game
+   */
   const handleClear = () => {
-    setGrid(
-      Array(5)
-        .fill()
-        .map(() => Array(5).fill(""))
-    );
-    setTime(0);
-    setIsTimerRunning(true);
+    resetTimer();
+    startTimer();
+    setGrid(generateGrid(5));
   };
-
-  useEffect(() => {
-    if (isTimerRunning) {
-      timerRef.current = setInterval(() => {
-        setTime((prev) => prev + 1);
-      }, 1000);
-    }
-    return () => clearInterval(timerRef.current);
-  }, [isTimerRunning]);
 
   return (
     <>
@@ -36,33 +26,24 @@ const Header = ({ setIsPenActive, isPenActive, setGrid }) => {
         <div className="py-4 px-6 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setModal(true)}
-              className="text-2xl text-primary border"
+              onClick={() => setOpenSettingModal(true)}
+              className="text-2xl text-primary"
             >
               <IoSettingsSharp />
             </button>
 
             <div
-              onClick={() => setIsTimerRunning(!isTimerRunning)}
+              onClick={() => {
+                stopTimer();
+                setIsGamePaused(true);
+              }}
               className="font-semibold text-lg cursor-pointer flex items-center gap-2"
             >
-              {isTimerRunning ? (
-                <>{formatTime(time)}</>
-              ) : (
-                <button className="text-primary text-2xl">
-                  <FaClock />
-                </button>
-              )}
+              {formatTime(time)}
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={handleClear}
-              className="px-4 py-2 bg-primary text-white rounded-md"
-            >
-              Reveal
-            </button>
             <button
               onClick={handleClear}
               className="px-4 py-2 bg-red-600 text-white rounded-md"
@@ -72,7 +53,14 @@ const Header = ({ setIsPenActive, isPenActive, setGrid }) => {
           </div>
         </div>
       </section>
-      {modal && <PuzzleSetting setModal={setModal} />}
+      <PuzzleSetting
+        setOpenSettingModal={setOpenSettingModal}
+        openSettingModal={openSettingModal}
+      />
+      <PauseModal
+        isGamePaused={isGamePaused}
+        setIsGamePaused={setIsGamePaused}
+      />
     </>
   );
 };

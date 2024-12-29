@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Header, Puzzel, WelcomModal } from "../components/home";
-import gridLayout from "../constants";
+import { puzzleData } from "../constants";
+import generateGrid from "../utils";
 
 const Home = () => {
   const [isPenActive, setIsPenActive] = useState(false);
-  const [grid, setGrid] = useState(gridLayout(5));
+  const [grid, setGrid] = useState(generateGrid(puzzleData.size));
 
   return (
     <section
@@ -14,7 +15,6 @@ const Home = () => {
       className="h-screen flex bg-no-repeat bg-center bg-cover items-center justify-center w-full"
     >
       <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white w-3/4 rounded-md overflow-hidden border border-gray-200">
-        <WelcomModal />
         <Header
           setIsPenActive={setIsPenActive}
           isPenActive={isPenActive}
@@ -22,6 +22,7 @@ const Home = () => {
         />
         <Puzzel isPenActive={isPenActive} grid={grid} setGrid={setGrid} />
       </div>
+      <WelcomModal setGrid={setGrid} />
     </section>
   );
 };

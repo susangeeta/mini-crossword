@@ -1,5 +1,8 @@
+/**
+ * Data for puzzel details
+ */
 export const puzzleData = {
-  size: 9,
+  size: 5,
   across: {
     1: {
       clue: "Petty fight",
@@ -55,9 +58,3 @@ export const puzzleData = {
     },
   },
 };
-
-export default function grid(count) {
-  return Array(count)
-    .fill()
-    .map(() => Array(count).fill(""));
-}

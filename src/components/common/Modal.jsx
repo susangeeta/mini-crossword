@@ -1,4 +1,7 @@
-// eslint-disable-next-line react/prop-types
+/* eslint-disable react/prop-types */
+/**
+ * Custom modal
+ */
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 

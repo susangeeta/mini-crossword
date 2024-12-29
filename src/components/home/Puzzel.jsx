@@ -1,25 +1,39 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
 import React, { useEffect, useRef, useState } from "react";
 import { puzzleData } from "../../constants";
+import { useTime } from "../../contexts/TimeContext";
+import LoseModal from "./LoseModal";
 import WinModal from "./WinModal";
 
 const Puzzle = ({ isPenActive, grid, setGrid }) => {
-  const [selectedCell, setSelectedCell] = useState({ row: 0, col: 0 });
+  const cellRefs = useRef([]);
+  const { stopTimer } = useTime();
+  const [isComplete, setIsComplete] = useState(false);
   const [direction, setDirection] = useState("across");
   const [selectedClue, setSelectedClue] = useState(null);
   const [showLossModal, setShowLossModal] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
-  const cellRefs = useRef([]);
+  const [selectedCell, setSelectedCell] = useState({ row: 0, col: 0 });
 
+  /**
+   * Setup the cell references for the grid.
+   */
   useEffect(() => {
-    cellRefs.current = Array(25)
+    cellRefs.current = Array(puzzleData.size * puzzleData.size)
       .fill()
       .map((_, i) => cellRefs.current[i] || React.createRef());
   }, []);
 
+  /**
+   * Logic to check if the game complete or not by checking both across and down with anwers
+   */
   useEffect(() => {
-    const checkWin = () => {
+    const checkWinOrloss = () => {
+      const isGridFull = grid.every((row) =>
+        row.every((cell) => cell !== "" && cell !== undefined)
+      );
+
       const acrossCorrect = Object.entries(puzzleData.across).every(
         ([_, clue]) => {
           const rowCells = grid[clue.position.row].slice(
@@ -37,16 +51,24 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
         );
         return clue.answer === colCells.join("");
       });
+      const isCorrect = acrossCorrect && downCorrect;
 
-      console.log(acrossCorrect, "accross");
-      console.log(downCorrect, "down");
+      if (isCorrect) {
+        stopTimer();
+        setIsComplete(isCorrect);
+      }
 
-      setIsComplete(acrossCorrect && downCorrect);
+      if (isGridFull && !isCorrect) {
+        stopTimer();
+        setShowLossModal(true);
+      }
     };
-
-    checkWin();
+    checkWinOrloss();
   }, [grid]);
 
+  /**
+   * Logic to handle clues list.
+   */
   const handleClueClick = (number, type) => {
     const clue = puzzleData[type][number];
     setSelectedClue({ number, type });
@@ -55,6 +77,9 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
     focusCell(clue.position.row, clue.position.col);
   };
 
+  /**
+   * Logic to handle cell selection.
+   */
   const handleCellSelect = (row, col) => {
     if (row === selectedCell.row && col === selectedCell.col) {
       setDirection(direction === "across" ? "down" : "across");
@@ -64,11 +89,17 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
     focusCell(row, col);
   };
 
+  /**
+   * Logic to handle cell focuss.
+   */
   const focusCell = (row, col) => {
     const index = row * 5 + col;
     cellRefs.current[index]?.current?.focus();
   };
 
+  /**
+   * Logic to handle keyboard events for navigation and input.
+   */
   const handleKeyDown = (e, row, col) => {
     const newGrid = [...grid];
 
@@ -99,6 +130,9 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
     }
   };
 
+  /**
+   * Logic to handle input into a cell and moves to the next cell.
+   */
   const handleInput = (e, row, col) => {
     const value = e.target.value.toUpperCase();
     if (/^[A-Z]$/.test(value)) {
@@ -116,6 +150,9 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
     }
   };
 
+  /**
+   * Logic to handle the clue number for the current cell.
+   */
   const getCurrentCellNumber = (row, col) => {
     for (const [number, clue] of Object.entries(puzzleData.across)) {
       if (clue.position.row === row && clue.position.col === col) return number;
@@ -126,6 +163,9 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
     return null;
   };
 
+  /**
+   * Logic to handle if a cell is highlighted.
+   */
   const isInSeletedMode = (rowIndex, colIndex) => {
     if (selectedClue) {
       const clue = puzzleData[selectedClue.type][selectedClue.number];
@@ -155,7 +195,6 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
 
   return (
     <section className="flex p-8 main-container">
-      <WinModal isComplete={isComplete} setIsComplete={setIsComplete} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="grid grid-cols-5 gap-2">
           {grid.map((row, rowIndex) =>
@@ -239,6 +278,16 @@ const Puzzle = ({ isPenActive, grid, setGrid }) => {
           </div>
         </div>
       </div>
+      <WinModal
+        isComplete={isComplete}
+        setIsComplete={setIsComplete}
+        setGrid={setGrid}
+      />
+      <LoseModal
+        setShowLossModal={setShowLossModal}
+        showLossModal={showLossModal}
+        setGrid={setGrid}
+      />
     </section>
   );
 };
