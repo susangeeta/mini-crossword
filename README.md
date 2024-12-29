@@ -22,13 +22,13 @@ A mini crossword game built as a Single Page Application (SPA). Users can solve 
   - Interactive grid for typing answers.
   - Clue display for solving puzzles.
   - Answer validation and completion check.
-- **Optional Features:**
+- **Responsive Design:**  
+  The application is fully responsive and works seamlessly on devices of all screen sizes, including mobile, tablet, and desktop.
   - **Puzzle Settings:**
     - Difficulty levels (Easy, Medium, Hard).
     - Timer for time-based gameplay.
   - **Game Settings:**
     - Theme switching (Light/Dark).
-    - Sound toggle.
 
 ## Installation
 
@@ -57,7 +57,7 @@ To run the project locally:
 
 The app is deployed and available at the following URL:
 
-[Live Demo](https://your-app-link.com)
+[Live Demo](https://mini-crossword-jade.vercel.app/)
 
 ## Folder Structure
 
@@ -76,16 +76,5 @@ src/
 
 - **Framework:** React.js
 - **Styling:** Tailwind CSS
-- **State Management:** Context API/Redux
-- **Deployment:** Vercel/Netlify
-
-## Author
-
-- **Name:** Susangeeta Swain
-- **Email:** [Your Email Address]
-- **GitHub:** [GitHub Profile](https://github.com/username)
-
-```
-
-Let me know if you need to modify or customize any section further!
-```
+- **State Management:** Context
+- **Deployment:** Vercel
