@@ -1,66 +1,109 @@
-# React + Vite
+# Mini Crossword Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+A sophisticated mini crossword application built as a Single Page Application (SPA), offering an immersive puzzle-solving experience. This project demonstrates modern web development practices while providing an engaging user interface for crossword enthusiasts.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Features
 
-Here’s the README in markdown format:
+### Core Gameplay
 
-````markdown
-# CamCom Assignment: NYT Mini Crossword
+- **Interactive Grid System**
+  - Dynamic cell selection with intelligent direction switching
+  - Automatic direction toggling (horizontal ↔ vertical) on double-click
+  - Smart cursor advancement to next cell after input
+  - Keyboard navigation support using arrow keys
 
-## Description
+### Advanced Game Mechanics
 
-A mini crossword game built as a Single Page Application (SPA). Users can solve crossword puzzles with interactive settings.
+- **Directional Input System**
+  - Primary click: Activates horizontal input mode
+  - Secondary click: Switches to vertical input mode
+  - Cross-reference validation for intersecting words
 
-## Features
+### User Experience
 
-- **Crossword Gameplay:**
-  - Interactive grid for typing answers.
-  - Clue display for solving puzzles.
-  - Answer validation and completion check.
-- **Responsive Design:**  
-  The application is fully responsive and works seamlessly on devices of all screen sizes, including mobile, tablet, and desktop.
-  - **Puzzle Settings:**
-    - Difficulty levels (Easy, Medium, Hard).
-    - Timer for time-based gameplay.
-  - **Game Settings:**
-    - Theme switching (Light/Dark).
+- **Intelligent Interface**
+  - Active word highlighting
+  - Current cell emphasis
 
-## Installation
+### Customization Options
 
-To run the project locally:
+- **Game Settings**
+  - Configurable timer functionality
+  - Optional hint system
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/username/CamCom-assignment.git
-   ```
-````
+### Technical Features
 
-2. Navigate to the project directory:
-   ```bash
-   cd CamCom-assignment
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the development server:
-   ```bash
-   npm start
-   ```
+- **Responsive Design**
 
-## Deployment
+  - Mobile-first approach
+  - Adaptive layout for all screen sizes
 
-The app is deployed and available at the following URL:
+- **Performance Optimization**
+  - Efficient state management
+  - Minimal re-renders
+  - Optimized puzzle validation
 
-[Live Demo](https://mini-crossword-jade.vercel.app/)
+## Technical Stack
 
-## Folder Structure
+### Core Technologies
 
+- React 18.2.0
+- Vite 5.0.0
+- Tailwind CSS 3.4.0
+
+### State Management
+
+- React Context API
+
+### Development Tools
+
+- ESLint
+- Prettier
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16.0.0 or higher)
+- npm (v7.0.0 or higher)
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/nyt-mini-crossword-clone.git
+```
+
+2. Navigate to project directory
+
+```bash
+cd nyt-mini-crossword-clone
+```
+
+3. Install dependencies
+
+```bash
+npm install
+```
+
+4. Start development server
+
+```bash
+npm run dev
+```
+
+5. Build for production
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```
 src/
 │
 ├── components/ # React components
@@ -71,10 +114,28 @@ src/
 ├── App.js # Main component
 ├── index.js # Entry point
 └── assets/ # Images, icons, etc.
+```
 
-## Technologies Used
+## Gameplay Instructions
 
-- **Framework:** React.js
-- **Styling:** Tailwind CSS
-- **State Management:** Context
-- **Deployment:** Vercel
+### Cell Selection and Input
+
+1. **Single Click**
+
+   - Activates horizontal input mode
+   - Highlights current word row
+   - Advances cursor automatically after input
+
+2. **Double Click on Same Cell**
+
+   - Toggles between horizontal and vertical input
+   - Updates highlighting to match current direction
+   - Maintains position for input
+
+3. **Keyboard Navigation**
+   - Arrow keys to move between cells
+
+## Deployment
+
+The application is deployed and accessible at:
+[Live Demo](https://mini-crossword-jade.vercel.app/)
